@@ -12,27 +12,26 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    # 1. Dézipper le projet (Si vous avez envoyé un fichier ZIP)
-    # Enlevez le "#" au début des 2 lignes ci-dessous et remplacez "votre_fichier.zip" par le VRAI nom de votre zip :
-    # - name: Unzip project
-    #   run: unzip votre_fichier.zip -d .
+    # 1. Extraction directe de votre fichier ZIP
+    - name: Unzip project
+      run: unzip Ultracamera-fixed.zip -d .
 
-    # 2. Configuration de Java 17 (sans le cache qui posait problème)
+    # 2. Configuration de Java 17
     - name: Set up JDK 17
       uses: actions/setup-java@v5
       with:
         java-version: '17'
         distribution: 'temurin'
 
-    # 3. Donner les permissions au script de compilation
+    # 3. Attribution des permissions au script de compilation
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    # 4. Compiler l'application Android
+    # 4. Compilation de l'application
     - name: Build Debug APK
       run: ./gradlew assembleDebug
 
-    # 5. Rendre l'APK téléchargeable
+    # 5. Exportation de l'APK téléchargable
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
